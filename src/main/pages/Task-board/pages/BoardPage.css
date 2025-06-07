@@ -1,0 +1,46 @@
+
+.task-card{
+    border: .5px solid #f2f2f2;
+    border-radius: 12px;
+    background: #73aaf7;
+    padding: 20px 8px;
+    width: 336px;
+    min-height: 300px;
+}
+.board{
+    border-radius: 33px;
+    padding: 15px 5px 15px 0;
+}
+.no-boards{
+    padding: 10px;
+    color: #555;
+}
+.board-container {
+    overflow-y: auto;
+    height: 80vh;
+    /* border-radius: 0px 30px 9px 0px; */
+    scrollbar-gutter: stable both-edges; /* Mantiene consistencia */
+    position: relative; /* Asegura que el contenedor controle la posición */
+
+}
+
+/* Scrollbar personalizado */
+.board-container::-webkit-scrollbar {
+    width: 10px; /* Ancho del scrollbar */
+    position: absolute; /* Asegura que sea superpuesto */
+
+}
+
+.board-container::-webkit-scrollbar-track {
+    background: transparent; /* Transparente para no ocupar espacio */
+}
+
+.board-container::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color del scroll */
+    border-radius: 10px; /* Bordes redondeados */
+    border: none; /* Sin espacio alrededor */
+}
+
+.board-container::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color cuando se pasa el mouse */
+}
