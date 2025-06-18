@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useProductStore, useCategoryStore } from '../../../../hooks';
-import { ProductForm, ProductsList } from '../components';
+import { ProductDiscountForm, ProductForm, ProductsList } from '../components';
 
 export const ProductsManager = () => {
   // Stores
@@ -12,6 +12,7 @@ export const ProductsManager = () => {
     updateProduct,
     deleteProduct,
     setActiveProduct,
+    removeDiscount
   } = useProductStore();
 
   const {
@@ -61,10 +62,13 @@ export const ProductsManager = () => {
     <div style={{ width:'100%', margin: 'auto' }}>
       <h2>Gestión de Productos</h2>
 
-      <ProductForm startLoadingProducts={   startLoadingProducts} startLoadingCategories={startLoadingCategories} addNewProduct={addNewProduct} updateProduct={updateProduct} addNewCategory={addNewCategory} categories={categories} form={form} setForm={setForm} setActiveProduct={setActiveProduct}/>
+      <div style={{width:'100%',display:'flex',gap:1,justifyContent:'space-between'}}>
+        <ProductForm startLoadingProducts={   startLoadingProducts} startLoadingCategories={startLoadingCategories} addNewProduct={addNewProduct} updateProduct={updateProduct} addNewCategory={addNewCategory} categories={categories} form={form} setForm={setForm} setActiveProduct={setActiveProduct}/>
+        <ProductDiscountForm/>
+      </div>
 
       <h3>Listado de Productos</h3>
-      <ProductsList products={products} deleteProduct={deleteProduct} setActiveProduct={setActiveProduct} />
+      <ProductsList products={products} deleteProduct={deleteProduct} setActiveProduct={setActiveProduct} removeDiscount={removeDiscount} />
     </div>
   );
 };

@@ -46,22 +46,49 @@ export const useProductStore = () => {
         }
     };
 
-    const updateProduct = async (id, product,images) => {
-        try {
-            const {data : currentImages} = await calendarApi.post('/api/images/upload-multiple', images);
+    const updateProduct = async (id, product, images) => {
+    try {
+        // Solo sube imágenes si hay imágenes válidas
+        let currentImages = { images: [] };
         
-           product.images = Array.from(new Set([
-            ...product.images,
-            ...currentImages.images.map(img => img.url)
-            ]));
-
-          
-            const { data } = await calendarApi.put(`/api/products/${id}`, product);
-            dispatch(onUpdateProduct(data.product));
-        } catch (error) {
-            console.error('Error al actualizar producto:', error);
+        if (images && images.length > 0) {
+        const { data } = await calendarApi.post('/api/images/upload-multiple', images);
+        currentImages = data;
         }
+
+        // Evita error si no hay imágenes nuevas
+        product.images = Array.from(new Set([
+        ...(product.images || []),
+        ...currentImages.images.map(img => img.url)
+        ]));
+
+        const { data } = await calendarApi.put(`/api/products/${id}`, product);
+        dispatch(onUpdateProduct(data.product));
+    } catch (error) {
+        console.error('Error al actualizar producto:', error);
+    }
     };
+
+    const removeDiscount = async (id) => {
+    try {
+        const producto = products.find(p => p.id === id);
+        if (!producto) return;
+
+        const updatedProduct = {
+        ...producto,
+        discount: {
+            isActive: false,
+            percentage: null
+        }
+        };
+
+        const { data } = await calendarApi.put(`/api/products/${id}`, updatedProduct);
+        dispatch(onUpdateProduct(data.product));
+    } catch (error) {
+        console.error('Error al quitar descuento:', error);
+    }
+    };
+
 
     const deleteProduct = async (id) => {
         const confirmar = confirm('¿Seguro querés eliminar este producto?');
@@ -121,5 +148,6 @@ export const useProductStore = () => {
         updateProduct,
         deleteProduct,
         deleteImage,
+        removeDiscount,
     };
 };

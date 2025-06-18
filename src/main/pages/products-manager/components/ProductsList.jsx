@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const ProductsList = ({products, deleteProduct, setActiveProduct}) => {
+export const ProductsList = ({products, deleteProduct, setActiveProduct,removeDiscount}) => {
   const onEditClick = (product) => {
       setActiveProduct(product);
     };
@@ -36,6 +36,11 @@ export const ProductsList = ({products, deleteProduct, setActiveProduct}) => {
                 <button onClick={() => deleteProduct(prod.id)} style={{ marginLeft: 10, color: 'red' }}>
                   Eliminar
                 </button>
+                {
+                  prod.discount.isActive==true&&(
+                    <button onClick={() => removeDiscount(prod.id)}>Quitar descuento</button>
+                  )
+                }
               </td>
             </tr>
           ))}
