@@ -14,10 +14,16 @@ export const useProductStore = () => {
     const dispatch = useDispatch();
     const { products, activeProduct, isLoadingProducts } = useSelector(state => state.product);
 
-    const startLoadingProducts = async () => {
+    const startLoadingProducts = async (categoryId = null, sort = null, search = '', page = 1, limit = '') => {
         dispatch(onLoadProductsState(true));
         try {
-            const { data } = await calendarApi.get('/api/products');
+             const params = new URLSearchParams();
+            if (categoryId) params.append('category', categoryId);
+            if (sort) params.append('sort', sort);
+            if (search) params.append('search', search);
+            params.append('page', page);
+            params.append('limit', limit);
+            const { data } = await calendarApi.get(`/api/products?${params.toString()}`);
             dispatch(onLoadProducts(data.products));
         } catch (error) {
             console.error('Error cargando productos:', error);
