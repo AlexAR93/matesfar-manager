@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { ImagesModal } from './ImagesModal';
 
-export const ProductForm = ({ startLoadingProducts, startLoadingCategories,addNewProduct,updateProduct,addNewCategory, categories, form, setForm, setActiveProduct}) => {
+export const ProductForm = ({ startLoadingProducts, startLoadingCategories,addNewProduct,updateProduct,addNewCategory, categories, form, setForm, setActiveProduct, urlSearch}) => {
     const [modalImages, setModalImages] = useState(false)
 
     const [images, setImages] = useState(0);
@@ -66,7 +66,7 @@ export const ProductForm = ({ startLoadingProducts, startLoadingCategories,addNe
         }
     
         resetForm();
-        startLoadingProducts();
+        startLoadingProducts(null, null, urlSearch);
       };
     
       const onAddCategory = async () => {
